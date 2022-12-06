@@ -10,13 +10,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="031603a8-a614-48c2-8b92-9cb7d1b526a3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/pointerless/CLI/CLI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/pointerless/CLI/CLI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/pointerless/PetriNetCRN/PetriNetExecutor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/pointerless/PetriNetCRN/PetriNetExecutor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/pointerless/PetriNetCRN/containers/Volume.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/pointerless/PetriNetCRN/containers/Volume.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/pointerless/PetriNetCRN/containers/serialization/StateSerializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/pointerless/PetriNetCRN/containers/serialization/StateSerializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,24 +40,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
   }
-}</component>
-  <component name="RunManager" selected="JUnit.ExecutionTests.queueTest">
+}]]></component>
+  <component name="RunManager" selected="JUnit.All in crn-attempt1">
     <configuration name="CLI" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.pointerless.CLI.CLI" />
       <module name="crn-attempt1" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="All in crn-attempt1" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="crn-attempt1" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -108,6 +112,7 @@
     </configuration>
     <list>
       <item itemvalue="Application.CLI" />
+      <item itemvalue="JUnit.All in crn-attempt1" />
       <item itemvalue="JUnit.ExecutionTests" />
       <item itemvalue="JUnit.ExecutionTests.executionTest" />
       <item itemvalue="JUnit.ExecutionTests.queueTest" />
@@ -115,6 +120,7 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.All in crn-attempt1" />
         <item itemvalue="JUnit.ExecutionTests.queueTest" />
         <item itemvalue="JUnit.ExecutionTests" />
         <item itemvalue="JUnit.ExecutionTests.executionTest" />
@@ -136,7 +142,7 @@
       <workItem from="1669995604651" duration="19446000" />
       <workItem from="1670024757712" duration="7526000" />
       <workItem from="1670266175342" duration="5545000" />
-      <workItem from="1670361031719" duration="4934000" />
+      <workItem from="1670361031719" duration="5574000" />
     </task>
     <servers />
   </component>
