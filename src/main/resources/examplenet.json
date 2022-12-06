@@ -1,0 +1,44 @@
+{
+  "volume": [200, 300, 400],
+  "places": [
+    {"element": "A", "volumeRatio": 0.5},
+    {"element": "B", "volumeRatio": 0.5},
+    {"element": "C", "volumeRatio": 0}
+  ],
+  "transitions": [
+    {
+      "inputPlaces": [
+        {
+          "element": "A",
+          "amount": 1
+        },
+        {
+          "element": "B",
+          "amount": 2
+        } ],
+      "outputPlaces": [
+        {
+          "element": "C",
+          "amount": 1
+        } ],
+      "c": 1.0
+    },
+    {
+      "inputPlaces": [
+        {
+          "element": "A",
+          "amount": 1
+        },
+        {
+          "element": "C",
+          "amount": 1
+        } ],
+      "outputPlaces": [
+        {
+          "element": "A",
+          "amount": 3
+        } ],
+      "c": 1.0
+    }
+  ]
+}

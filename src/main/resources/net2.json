@@ -1,0 +1,60 @@
+{
+  "volume": 110,
+  "places": [
+    {"element": "E", "volumeRatio": 0.09090909},
+    {"element": "S", "volumeRatio": 0.90909090},
+    {"element": "ES", "volumeRatio": 0},
+    {"element": "P", "volumeRatio": 0}
+  ],
+  "transitions": [
+    {
+      "inputPlaces": [
+        {
+          "element": "E",
+          "amount": 1
+        },
+        {
+          "element": "S",
+          "amount": 1
+        } ],
+      "outputPlaces": [
+        {
+          "element": "ES",
+          "amount": 1
+        } ],
+      "c": 1.0
+    },
+    {
+      "inputPlaces": [
+        {
+          "element": "ES",
+          "amount": 1
+        }
+      ],
+      "outputPlaces": [
+        {
+          "element": "E",
+          "amount": 1
+        },{
+          "element": "S",
+          "amount": 1
+        }
+      ],
+      "c": 100.0
+    },{
+      "inputPlaces": [
+        {
+          "element": "ES",
+          "amount": 1
+        }
+      ],
+      "outputPlaces": [
+        {
+          "element": "P",
+          "amount": 1
+        }
+      ],
+      "c": 0.1
+    }
+  ]
+}
