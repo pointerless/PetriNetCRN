@@ -10,34 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="031603a8-a614-48c2-8b92-9cb7d1b526a3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/PetriNetCRN_jar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jpa-buddy.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/graphing/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/graphing/basic.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/graphing/utils.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/pointerless/CLI/CLI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/pointerless/PetriNetCRN/PetriNetExecutor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/pointerless/PetriNetCRN/SerializationHelper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/pointerless/PetriNetCRN/containers/PetriNet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/pointerless/PetriNetCRN/containers/Place.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/pointerless/PetriNetCRN/containers/State.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/pointerless/PetriNetCRN/containers/Transition.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/pointerless/PetriNetCRN/containers/TransitionPriorityQueue.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/pointerless/PetriNetCRN/containers/Volume.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/pointerless/PetriNetCRN/containers/serialization/PetriNetDeserializer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/pointerless/PetriNetCRN/containers/serialization/StateSerializer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/META-INF/MANIFEST.MF" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/examplenet.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/net2.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/ExecutionTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/SerializeTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -157,7 +130,7 @@
       <workItem from="1669995604651" duration="19446000" />
       <workItem from="1670024757712" duration="7526000" />
       <workItem from="1670266175342" duration="5545000" />
-      <workItem from="1670361031719" duration="80000" />
+      <workItem from="1670361031719" duration="380000" />
     </task>
     <servers />
   </component>

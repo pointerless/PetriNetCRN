@@ -40,3 +40,6 @@ build/
 ### Data Files ###
 *.csv
 *.json
+
+### Built JAR ###
+/out/artifacts/PetriNetCRN_jar/
