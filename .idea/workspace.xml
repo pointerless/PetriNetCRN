@@ -10,7 +10,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="031603a8-a614-48c2-8b92-9cb7d1b526a3" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/pointerless/CLI/CLI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/pointerless/CLI/CLI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/pointerless/PetriNetCRN/PetriNetExecutor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/pointerless/PetriNetCRN/PetriNetExecutor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/pointerless/PetriNetCRN/containers/Volume.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/pointerless/PetriNetCRN/containers/Volume.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/pointerless/PetriNetCRN/containers/serialization/StateSerializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/pointerless/PetriNetCRN/containers/serialization/StateSerializer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,7 +136,7 @@
       <workItem from="1669995604651" duration="19446000" />
       <workItem from="1670024757712" duration="7526000" />
       <workItem from="1670266175342" duration="5545000" />
-      <workItem from="1670361031719" duration="380000" />
+      <workItem from="1670361031719" duration="4934000" />
     </task>
     <servers />
   </component>

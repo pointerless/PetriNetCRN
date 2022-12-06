@@ -1,14 +1,10 @@
 package org.pointerless.PetriNetCRN.containers;
 
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
 import java.util.List;
 
 public class Volume {
 
 	private Long volume;
-
 
 	private final List<Long> volumes;
 
@@ -35,6 +31,11 @@ public class Volume {
 		if (this.index >= this.volumes.size()) return false;
 		this.volume = this.volumes.get(index);
 		return true;
+	}
+
+	public void resetVolume() {
+		this.index = 0;
+		this.volume = this.volumes.get(this.index);
 	}
 
 	public Integer getIndex() {

@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "/",
+  "title": "Net",
+  "description": "A Petri Net specification for simulation",
+  "type": "object",
+  "properties": {
+    "volume": {
+      "type":["integer", "array"],
+      "minimum": 0,
+      "description": "Volume, either one value or multiple for repeated runs",
+      "items": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "places": {
+      "type": "array",
+      "description": "The 'places' in the Petri Net",
+      "items": {
+        "type": "object",
+        "properties": {
+          "element": {
+            "type": "string",
+            "description": "Label for the element being held in this place"
+          },
+          "volumeRatio": {
+            "type": "number",
+            "description": "Ratio of volume, can only sum to 1.0 for places combined",
+            "minimum": 0.0,
+            "maximum": 1.0
+          }
+        }
+      }
+    },
+    "transitions": {
+      "type": "array",
+      "description": "'transitions' for net",
+      "items": {
+        "type": "object",
+        "properties": {
+          "inputPlaces": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "element": {
+                  "type": "string",
+                  "description": "Name of element taken as reactant, must match one in places"
+                },
+                "amount": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "description": "Amount required for transition to fire"
+                }
+              }
+            }
+          },
+          "outputPlaces": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "element": {
+                  "type": "string",
+                  "description": "Name of element outputted as product, must match one in places"
+                },
+                "amount": {
+                  "type": "integer",
+                  "description": "Amount created on the transition being fired"
+                }
+              }
+            }
+          },
+          "c": {
+            "type": "number",
+            "minimum": 0.0,
+            "description": "Stochastic rate of reaction, will be used to calculated propensity"
+          }
+        }
+      }
+    }
+  }
+}

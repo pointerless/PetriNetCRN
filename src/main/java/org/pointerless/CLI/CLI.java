@@ -3,7 +3,6 @@ package org.pointerless.CLI;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
-import com.beust.jcommander.SubParameter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.pointerless.PetriNetCRN.PetriNetExecutor;
 import org.pointerless.PetriNetCRN.SerializationHelper;
@@ -12,14 +11,11 @@ import org.pointerless.PetriNetCRN.containers.State;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.FileStore;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
-import java.util.random.RandomGenerator;
-import java.util.stream.Collectors;
 
 public class CLI {
 
