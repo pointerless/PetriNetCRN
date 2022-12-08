@@ -8,14 +8,17 @@ public class State implements Serializable {
 
 	private HashMap<String, Long> state;
 
-	private Double t;
+	private Double time;
 
 	private Long volume;
 
-	public State(HashMap<String, Long> state, Double t, Long volume){
+	private Integer repeatNum;
+
+	public State(HashMap<String, Long> state, Double time, Long volume, Integer repeatNum){
 		this.state = state;
-		this.t = t;
+		this.time = time;
 		this.volume = volume;
+		this.repeatNum = repeatNum;
 	}
 
 	public HashMap<String, Long> getState() {
@@ -26,12 +29,12 @@ public class State implements Serializable {
 		this.state = state;
 	}
 
-	public Double getT() {
-		return t;
+	public Double getTime() {
+		return time;
 	}
 
-	public void setT(Double t) {
-		this.t = t;
+	public void setTime(Double t) {
+		this.time = t;
 	}
 
 	public Long getVolume() {
@@ -42,16 +45,24 @@ public class State implements Serializable {
 		this.volume = volume;
 	}
 
+	public Integer getRepeatNum() {
+		return repeatNum;
+	}
+
+	public void setRepeatNum(Integer repeatNum) {
+		this.repeatNum = repeatNum;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		State state1 = (State) o;
-		return state.equals(state1.state) && t.equals(state1.t) && volume.equals(state1.volume);
+		return state.equals(state1.state) && time.equals(state1.time) && volume.equals(state1.volume) && repeatNum.equals(state1.repeatNum);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(state, t, volume);
+		return Objects.hash(state, time, volume, repeatNum);
 	}
 }

@@ -26,8 +26,8 @@ public class TransitionPriorityQueue {
 		queue = transitions;
 	}
 
-	public boolean actionNext(Double tickStep, Random random){
-		this.queue.parallelStream().forEach(transition -> transition.updateTimeRemaining(tickStep, random));
+	public boolean actionNext(Double tickStep, Volume volume, Random random){
+		this.queue.parallelStream().forEach(transition -> transition.updateTimeRemaining(tickStep, volume, random));
 		Optional<Transition> fireable = this.queue.stream().sorted(comparator)
 				.filter(Transition::canFire).findFirst();
 		if(fireable.isPresent()){

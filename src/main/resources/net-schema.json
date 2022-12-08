@@ -25,10 +25,16 @@
             "description": "Label for the element being held in this place"
           },
           "volumeRatio": {
+            "required": false,
             "type": "number",
             "description": "Ratio of volume, can only sum to 1.0 for places combined",
             "minimum": 0.0,
             "maximum": 1.0
+          },
+          "generator": {
+            "required": false,
+            "type": "string",
+            "description": "Valid function definition taking volume as argument to calculate quantity (mxParser)"
           }
         }
       }

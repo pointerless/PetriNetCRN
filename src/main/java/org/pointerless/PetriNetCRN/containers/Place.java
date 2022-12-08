@@ -1,18 +1,26 @@
 package org.pointerless.PetriNetCRN.containers;
 
+import org.mariuszgromada.math.mxparser.Expression;
+import org.mariuszgromada.math.mxparser.Function;
+
 import java.util.Objects;
 
 public class Place {
 
 	private String element;
 
-	private Double volumeRatio;
-
 	private Long contains;
+
+	private final Function quantityGenerator;
 
 	public Place(String element, Double volumeRatio) {
 		this.element = element;
-		this.volumeRatio = volumeRatio;
+		this.quantityGenerator = new Function("f(n) = n*"+volumeRatio.toString());
+	}
+
+	public Place(String element, String generator){
+		this.element = element;
+		this.quantityGenerator = new Function(generator);
 	}
 
 	public void add(Long amount) {
@@ -40,16 +48,9 @@ public class Place {
 		return contains;
 	}
 
-	public Double getVolumeRatio() {
-		return volumeRatio;
-	}
-
-	public void setVolumeRatio(Double volumeRatio) {
-		this.volumeRatio = volumeRatio;
-	}
 
 	public void updateContainsFromVolume(Volume volume){
-		this.contains = Math.round(volume.getVolume() * this.volumeRatio);
+		this.contains = Math.round(this.quantityGenerator.calculate(volume.getVolume()));
 	}
 
 	@Override
@@ -57,6 +58,7 @@ public class Place {
 		return "Place{" +
 				"element='" + element + '\'' +
 				", contains=" + contains +
+				", generator=" + quantityGenerator.getFunctionExpressionString() +
 				'}';
 	}
 
@@ -65,7 +67,7 @@ public class Place {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Place place = (Place) o;
-		return element.equals(place.element) && volumeRatio.equals(place.volumeRatio);
+		return element.equals(place.element) && Objects.equals(contains, place.contains) && quantityGenerator.equals(place.quantityGenerator);
 	}
 
 	@Override

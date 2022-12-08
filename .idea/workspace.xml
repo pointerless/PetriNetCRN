@@ -10,9 +10,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="031603a8-a614-48c2-8b92-9cb7d1b526a3" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/graphing/crn_utils.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/graphing/nets/double-b.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/graphing/nets/tri-molecular.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/tri-molecular.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/PetriNetCRN_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/PetriNetCRN_jar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphing/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/graphing/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphing/basic.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/graphing/basic.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphing/utils.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/pointerless/CLI/CLI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/pointerless/CLI/CLI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/pointerless/PetriNetCRN/PetriNetExecutor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/pointerless/PetriNetCRN/PetriNetExecutor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/pointerless/PetriNetCRN/containers/PetriNet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/pointerless/PetriNetCRN/containers/PetriNet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/pointerless/PetriNetCRN/containers/Place.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/pointerless/PetriNetCRN/containers/Place.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/pointerless/PetriNetCRN/containers/State.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/pointerless/PetriNetCRN/containers/State.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/pointerless/PetriNetCRN/containers/Transition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/pointerless/PetriNetCRN/containers/Transition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/pointerless/PetriNetCRN/containers/TransitionPriorityQueue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/pointerless/PetriNetCRN/containers/TransitionPriorityQueue.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/pointerless/PetriNetCRN/containers/Volume.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/pointerless/PetriNetCRN/containers/Volume.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/pointerless/PetriNetCRN/containers/serialization/PetriNetDeserializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/pointerless/PetriNetCRN/containers/serialization/PetriNetDeserializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/pointerless/PetriNetCRN/containers/serialization/StateSerializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/pointerless/PetriNetCRN/containers/serialization/StateSerializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/examplenet.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/examplenet.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/net-schema.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/net-schema.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/ExecutionTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ExecutionTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,15 +67,24 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/home/harry/IdeaProjects/crn-attempt1/src/main/resources",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
+    "project.structure.last.edited": "Artifacts",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "run.code.analysis.last.selected.profile": "pProject Default",
     "settings.editor.selected.configurable": "preferences.lookFeel"
   }
 }]]></component>
-  <component name="RunManager" selected="JUnit.All in crn-attempt1">
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/graphing/nets" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.crn_utils">
     <configuration name="CLI" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.pointerless.CLI.CLI" />
       <module name="crn-attempt1" />
@@ -100,15 +130,27 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="SerializeTests.serialize" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="crn_utils" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="crn-attempt1" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="SerializeTests" />
-      <option name="METHOD_NAME" value="serialize" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/graphing" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/graphing/crn_utils.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
     </configuration>
     <list>
       <item itemvalue="Application.CLI" />
@@ -116,15 +158,15 @@
       <item itemvalue="JUnit.ExecutionTests" />
       <item itemvalue="JUnit.ExecutionTests.executionTest" />
       <item itemvalue="JUnit.ExecutionTests.queueTest" />
-      <item itemvalue="JUnit.SerializeTests.serialize" />
+      <item itemvalue="Python.crn_utils" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.All in crn-attempt1" />
-        <item itemvalue="JUnit.ExecutionTests.queueTest" />
-        <item itemvalue="JUnit.ExecutionTests" />
+        <item itemvalue="Python.crn_utils" />
         <item itemvalue="JUnit.ExecutionTests.executionTest" />
-        <item itemvalue="JUnit.SerializeTests.serialize" />
+        <item itemvalue="JUnit.ExecutionTests.queueTest" />
+        <item itemvalue="JUnit.All in crn-attempt1" />
+        <item itemvalue="JUnit.ExecutionTests" />
       </list>
     </recent_temporary>
   </component>
@@ -142,7 +184,8 @@
       <workItem from="1669995604651" duration="19446000" />
       <workItem from="1670024757712" duration="7526000" />
       <workItem from="1670266175342" duration="5545000" />
-      <workItem from="1670361031719" duration="5574000" />
+      <workItem from="1670361031719" duration="16705000" />
+      <workItem from="1670428580463" duration="23587000" />
     </task>
     <servers />
   </component>
@@ -151,5 +194,6 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/crn_attempt1$basic.coverage" NAME="basic Coverage Results" MODIFIED="1670004541409" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/graphing" />
+    <SUITE FILE_PATH="coverage/crn_attempt1$crn_utils.coverage" NAME="crn_utils Coverage Results" MODIFIED="1670461729800" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/graphing" />
   </component>
 </project>

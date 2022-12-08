@@ -43,3 +43,5 @@ build/
 
 ### Built JAR ###
 /out/artifacts/PetriNetCRN_jar/
+### Symlinked JAR ###
+/graphing/PetriNetCRN.jar

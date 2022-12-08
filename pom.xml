@@ -31,5 +31,10 @@
             <artifactId>jcommander</artifactId>
             <version>1.82</version>
         </dependency>
+        <dependency>
+            <groupId>org.mariuszgromada.math</groupId>
+            <artifactId>MathParser.org-mXparser</artifactId>
+            <version>5.1.0</version>
+        </dependency>
     </dependencies>
 </project>

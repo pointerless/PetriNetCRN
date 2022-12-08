@@ -25,7 +25,7 @@ public class PetriNet {
 	}
 
 	public boolean runTransitions(Double tickStep, Random random){
-		return this.transitions.actionNext(tickStep, random);
+		return this.transitions.actionNext(tickStep, this.volume, random);
 	}
 
 	public State getStateForTime(Double t) {
@@ -33,7 +33,15 @@ public class PetriNet {
 		for(Place place : this.places){
 			state.put(place.getElement(), place.getContains());
 		}
-		return new State(state, t, this.volume.getVolume());
+		return new State(state, t, this.volume.getVolume(), 0);
+	}
+
+	public State getStateForTimeAndRepeatNum(Double t, Integer repeatNum) {
+		HashMap<String, Long> state = new HashMap<>();
+		for(Place place : this.places){
+			state.put(place.getElement(), place.getContains());
+		}
+		return new State(state, t, this.volume.getVolume(), repeatNum);
 	}
 
 	public ArrayList<Place> getPlaces() {
@@ -59,6 +67,20 @@ public class PetriNet {
 	public void setVolume(Volume volume) {
 		this.volume = volume;
 		this.places.forEach(place -> place.updateContainsFromVolume(volume));
+	}
+
+	public void resetVolume() {
+		this.volume.resetVolume();
+		this.places.forEach(place -> place.updateContainsFromVolume(volume));
+	}
+
+	public boolean nextVolume() {
+		if (this.volume.nextVolume()) {
+			this.places.forEach(place -> place.updateContainsFromVolume(volume));
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override

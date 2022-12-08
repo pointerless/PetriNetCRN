@@ -1,25 +1,39 @@
 package org.pointerless.CLI;
 
 
+import com.beust.jcommander.IStringConverter;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.pointerless.PetriNetCRN.PetriNetExecutor;
 import org.pointerless.PetriNetCRN.SerializationHelper;
 import org.pointerless.PetriNetCRN.containers.PetriNet;
-import org.pointerless.PetriNetCRN.containers.State;
+import org.pointerless.PetriNetCRN.containers.Volume;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 public class CLI {
 
 	public static class Args {
+
+		private static class VolumeListConverter implements IStringConverter<List<Long>> {
+
+			@Override
+			public List<Long> convert(String s) {
+				String[] volumeStrings = s.split(",");
+				List<Long> out = new ArrayList<>();
+				for(String volume : volumeStrings){
+					out.add(Long.valueOf(volume));
+				}
+				return out;
+			}
+		}
+
 		@Parameter(names = {"--crnPath", "-p"}, description = "Chemical Reaction Network JSON file path")
 		private String crnPath = "";
 
@@ -35,8 +49,9 @@ public class CLI {
 		@Parameter(names = {"--outJSON", "-oJ"}, description = "Output JSON file path")
 		private String outputJSON = "";
 
-		@Parameter(names = {"--outCSV", "-oC"}, description = "Output CSV file path")
-		private String outputCSV = "";
+		// TODO: Implement stream based JSON output
+		//@Parameter(names = {"--outCSV", "-oC"}, description = "Output CSV file path")
+		//private String outputCSV = "";
 
 		@Parameter(names = {"--repeats", "-r"}, description = "Number of repeats to do")
 		private int repeats = 1;
@@ -46,6 +61,9 @@ public class CLI {
 
 		@Parameter(names = {"--tick", "-t"}, description = "Tick step time")
 		private Double tick = 0.1;
+
+		@Parameter(names = {"--volumes", "-v"}, description = "Override volumes in file", listConverter = VolumeListConverter.class)
+		private List<Long> volumes = null;
 	}
 
 
@@ -74,10 +92,8 @@ public class CLI {
 			random.setSeed(args.seed);
 		}
 
-		HashMap<Integer, ArrayList<State>> finalStates = new HashMap<>();
 		String JSONNet = args.crnData;
 		if(!args.crnPath.isEmpty()) {
-			System.out.println("Attempting to read from path '" + args.crnPath + "'...");
 			try {
 				JSONNet = String.join("\n", Files.readAllLines(Path.of(args.crnPath)));
 			}catch(IOException e){
@@ -88,54 +104,43 @@ public class CLI {
 		}
 
 		ObjectMapper objectMapper = SerializationHelper.getObjectMapper();
-		for(int repeatNum = 0; repeatNum < args.repeats; repeatNum++) {
-			if(args.repeats > 1) System.out.println("Executing repeat: "+repeatNum);
-			PetriNet petriNet = null;
-			try {
-				petriNet = objectMapper.readValue(JSONNet, PetriNet.class);
-			}catch (Exception e){
-				System.err.println("ERROR: Could not deserialize");
-				System.err.println(e.getMessage());
-				System.exit(-1);
+		PetriNet petriNet = null;
+		try {
+			petriNet = objectMapper.readValue(JSONNet, PetriNet.class);
+			if(args.volumes != null){
+				petriNet.setVolume(new Volume(args.volumes));
 			}
-			PetriNetExecutor petriNetExecutor = new PetriNetExecutor(petriNet, args.tick);
-
-			boolean fired = true;
-			while(fired && petriNetExecutor.getT() <= args.tMax) {
-				fired = petriNetExecutor.step(random);
-			}
-			finalStates.put(repeatNum, petriNetExecutor.getStateHistory());
+		}catch (Exception e){
+			System.err.println("ERROR: Could not deserialize");
+			System.err.println(e.getMessage());
+			System.exit(-1);
 		}
 
-		if(!args.outputJSON.isEmpty() || args.outputCSV.isEmpty()){
+		PrintStream printStream = System.out;
+
+		if(!args.outputJSON.isEmpty()){
 			try {
-				if(args.repeats == 1) {
-					if(args.outputJSON.isEmpty()) {
-						String output = objectMapper.writeValueAsString(finalStates.get(0));
-						System.out.println(output);
-					}else {
-						objectMapper.writeValue(new File(args.outputJSON), finalStates.get(0));
-					}
-				}else {
-					if(args.outputJSON.isEmpty()) {
-						String output = objectMapper.writeValueAsString(finalStates);
-						System.out.println(output);
-					}else {
-						objectMapper.writeValue(new File(args.outputJSON), finalStates);
-					}
+				File outputFile = new File(args.outputJSON);
+				if (!outputFile.canWrite()) {
+					throw new IllegalArgumentException("Cannot write to file '" + args.outputJSON + "'");
 				}
-			}catch (Exception e){
-				System.err.println("Could not serialize!");
-				System.err.println(e.getMessage());
+				FileOutputStream outputFileStream = new FileOutputStream(outputFile);
+				printStream = new PrintStream(outputFileStream, true);
+			}catch(Exception e){
+				System.err.println("Could not open output file: "+e.getMessage());
 				System.exit(-1);
 			}
 		}
 
-		if(!args.outputCSV.isEmpty()){
-			if(args.repeats == 1){
-				PetriNetExecutor.writeStateHistoryToCSV(new File(args.outputCSV), finalStates.get(0));
-			}else{
-				PetriNetExecutor.writeRepeatStateHistoryToCSV(new File(args.outputCSV), finalStates);
+		PetriNetExecutor petriNetExecutor = new PetriNetExecutor(petriNet, args.tick, args.repeats, printStream);
+
+		boolean fired = true;
+		while(fired) {
+			try {
+				fired = petriNetExecutor.step(random, args.tMax);
+			} catch (IOException e) {
+				System.err.println("Could not run step: "+e.getMessage());
+				System.exit(-1);
 			}
 		}
 

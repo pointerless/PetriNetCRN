@@ -49,7 +49,15 @@ public class PetriNetDeserializer extends StdDeserializer<PetriNet> {
 			throw new IOException("Volume is of unusable type: '"+node.get("volume").getNodeType().toString()+"'");
 		}
 		for(JsonNode place : node.get("places")){
-			Place newPlace = new Place(place.get("element").asText(), place.get("volumeRatio").asDouble());
+			Place newPlace;
+			if(place.has("volumeRatio") && place.get("volumeRatio").isNumber()){
+				newPlace = new Place(place.get("element").asText(), place.get("volumeRatio").asDouble());
+			}else if(place.has("generator") && place.get("generator").isTextual()){
+				newPlace = new Place(place.get("element").asText(), place.get("generator").asText());
+			}else{
+				throw new IOException("No system of generating place quantity from volume for place '"
+						+place.get("element").asText()+"'");
+			}
 			newPlace.updateContainsFromVolume(volume);
 			places.add(newPlace);
 			placeLookup.put(newPlace.getElement(), newPlace);

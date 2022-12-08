@@ -24,7 +24,6 @@ public class Transition {
 		this.outputPlaces = outputPlaces;
 		this.c = c;
 		this.timeRemaining = 1.0/c;
-		this.updatePropensity();
 	}
 
 	public boolean canFire() {
@@ -80,8 +79,8 @@ public class Transition {
 				.orElseThrow();
 	}
 
-	private void updatePropensity() {
-		this.propensity = Stream.concat(Stream.of(this.c),
+	private void updatePropensity(Volume volume) {
+		this.propensity = Stream.concat(Stream.of(this.c/volume.getVolume()),
 				inputPlaces.entrySet().stream().map(p -> choose(p.getKey().getContains(), p.getValue())))
 						.reduce((a, b) -> a*b).orElseThrow();
 	}
@@ -90,10 +89,9 @@ public class Transition {
 		return timeRemaining;
 	}
 
-	public Double updateTimeRemaining(Double time, Random random){
-		this.updatePropensity();
+	public void updateTimeRemaining(Double time, Volume volume, Random random){
+		this.updatePropensity(volume);
 		this.timeRemaining = time - (Math.log(random.nextFloat())/this.propensity);
-		return timeRemaining;
 	}
 
 	@Override

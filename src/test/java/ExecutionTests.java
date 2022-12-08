@@ -18,6 +18,8 @@ public class ExecutionTests {
 
 	private static File net2File;
 
+	private static File triFile;
+
 	@BeforeAll
 	public static void init(){
 		objectMapper = SerializationHelper.getObjectMapper();
@@ -28,11 +30,14 @@ public class ExecutionTests {
 
 		resourceName = "net2.json";
 		net2File = new File(Objects.requireNonNull(classLoader.getResource(resourceName)).getFile());
+
+		resourceName = "tri-molecular.json";
+		triFile = new File(Objects.requireNonNull(classLoader.getResource(resourceName)).getFile());
 	}
 
 	@Test
 	void queueTest() throws IOException {
-		PetriNet petriNet = objectMapper.readValue(exampleNetFile, PetriNet.class);
+		PetriNet petriNet = objectMapper.readValue(triFile, PetriNet.class);
 
 		TransitionPriorityQueue q = petriNet.getTransitions();
 		ArrayList<Place> places = petriNet.getPlaces();
@@ -40,11 +45,11 @@ public class ExecutionTests {
 		q.stream().forEach(System.out::println);
 		places.forEach(System.out::print);
 		System.out.println();
-		q.actionNext(1.25, random);
+		q.actionNext(1.25, petriNet.getVolume(), random);
 		q.stream().forEach(System.out::println);
 		places.forEach(System.out::print);
 		System.out.println();
-		q.actionNext(1.25, random);
+		q.actionNext(1.25, petriNet.getVolume(), random);
 		q.stream().forEach(System.out::println);
 		places.forEach(System.out::print);
 		System.out.println();
@@ -52,25 +57,14 @@ public class ExecutionTests {
 
 	@Test
 	void executionTest() throws IOException {
-		PetriNet petriNet = objectMapper.readValue(exampleNetFile, PetriNet.class);
-		PetriNetExecutor petriNetExecutor = new PetriNetExecutor(petriNet, 0.1);
+		PetriNet petriNet = objectMapper.readValue(triFile, PetriNet.class);
+		PetriNetExecutor petriNetExecutor = new PetriNetExecutor(petriNet, 0.1, 1, System.out);
 		Random random = new Random();
 
 		boolean fired = true;
 		while(fired) {
-			fired = petriNetExecutor.step(random);
+			fired = petriNetExecutor.step(random, 1000.0);
 		}
-
-		String fileName = "/home/harry/IdeaProjects/crn-attempt1/graphing/out" + (System.currentTimeMillis() / 1000L);
-
-		System.out.println("Outputting to: "+fileName+".csv");
-
-		PetriNetExecutor.writeStateHistoryToCSV(new File(fileName+".csv"), petriNetExecutor.getStateHistory());
-
-		System.out.println("Outputting to: "+fileName+".json");
-
-		objectMapper.writeValue(new File(fileName+".json"), petriNetExecutor.getStateHistory());
-
 	}
 
 }

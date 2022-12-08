@@ -20,8 +20,9 @@ public final class StateSerializer extends StdSerializer<State> {
 	@Override
 	public void serialize(State state, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
 		jsonGenerator.writeStartObject();
-		jsonGenerator.writeNumberField("time", state.getT());
+		jsonGenerator.writeNumberField("time", state.getTime());
 		jsonGenerator.writeNumberField("volume", state.getVolume());
+		jsonGenerator.writeNumberField("repeatNum", state.getRepeatNum());
 		for(String element : state.getState().keySet()){
 			jsonGenerator.writeNumberField(element, state.getState().get(element));
 		}

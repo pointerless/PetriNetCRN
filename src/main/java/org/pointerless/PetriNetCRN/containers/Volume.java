@@ -14,6 +14,7 @@ public class Volume {
 	public Volume(Long volume){
 		this.volume = volume;
 		this.volumes = List.of(volume);
+		this.index = 0;
 	}
 
 	public Volume(List<Long> volumes) {
@@ -27,8 +28,8 @@ public class Volume {
 	}
 
 	public boolean nextVolume() {
+		if (this.index + 1 >= this.volumes.size()) return false;
 		this.index += 1;
-		if (this.index >= this.volumes.size()) return false;
 		this.volume = this.volumes.get(index);
 		return true;
 	}
