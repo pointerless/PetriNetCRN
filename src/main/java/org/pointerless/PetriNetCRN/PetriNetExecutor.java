@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 public class PetriNetExecutor {
 
 	private PetriNet petriNet;
-	private final Double tickStep;
 	private Double t = 0.0;
 	private final Integer repeats;
 	private Integer repeatNum = 0;
@@ -21,28 +20,22 @@ public class PetriNetExecutor {
 
 	private boolean isFirst = true;
 
-	public PetriNetExecutor(PetriNet petriNet, Double tickStep, Integer repeats, PrintStream printStream){
+	public PetriNetExecutor(PetriNet petriNet, Integer repeats, PrintStream printStream){
 		this.petriNet = petriNet;
-		this.tickStep = tickStep;
 		this.repeats = repeats;
 		this.printStream = printStream;
 		this.printStream.print("[");
 	}
 
 	public boolean step(Random random, Double tMax) throws IOException {
-		t += tickStep;
-		if(t > tMax){
+		if(t > tMax || !petriNet.canFire()){
 			return this.checkForRepeat();
 		}
-		boolean fired = petriNet.runTransitions(t, random);
-		if (fired) {
-			if(!isFirst) printStream.print(",");
-			else isFirst = false;
-			printStream.write(objectMapper.writeValueAsBytes(petriNet.getStateForTimeAndRepeatNum(t, repeatNum)));
-			return true;
-		} else {
-			return this.checkForRepeat();
-		}
+		t = petriNet.runTransitions(t, random);
+		if(!isFirst) printStream.print(",");
+		else isFirst = false;
+		printStream.write(objectMapper.writeValueAsBytes(petriNet.getStateForTimeAndRepeatNum(t, repeatNum)));
+		return true;
 	}
 
 	private boolean checkForRepeat(){
@@ -65,10 +58,6 @@ public class PetriNetExecutor {
 
 	public void setNet(PetriNet petriNet) {
 		this.petriNet = petriNet;
-	}
-
-	public Double getTickStep() {
-		return this.tickStep;
 	}
 
 	public Double getT() {

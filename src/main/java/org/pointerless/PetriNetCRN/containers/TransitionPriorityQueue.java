@@ -9,9 +9,9 @@ public class TransitionPriorityQueue {
 
 		@Override
 		public int compare(Transition o1, Transition o2) {
-			if (Objects.equals(o1.getTimeRemaining(), o2.getTimeRemaining())){
+			if (Objects.equals(o1.getNextOccurrence(), o2.getNextOccurrence())){
 				return 0;
-			} else if (o1.getTimeRemaining() > o2.getTimeRemaining()){
+			} else if (o1.getNextOccurrence() > o2.getNextOccurrence()){
 				return 1;
 			}
 			return -1;
@@ -26,19 +26,18 @@ public class TransitionPriorityQueue {
 		queue = transitions;
 	}
 
-	public boolean actionNext(Double tickStep, Volume volume, Random random){
-		this.queue.parallelStream().forEach(transition -> transition.updateTimeRemaining(tickStep, volume, random));
+	public Double actionNext(Double time, Volume volume, Random random){
+		this.queue.parallelStream().forEach(transition -> transition.updateTimeRemaining(time, volume, random));
 		Optional<Transition> fireable = this.queue.stream().sorted(comparator)
 				.filter(Transition::canFire).findFirst();
 		if(fireable.isPresent()){
-			fireable.get().fire();
-			return true;
+			return fireable.get().fire();
 		}
-		return false;
+		throw new RuntimeException("Cannot fire");
 	}
 
-	public Stream<Transition> stream(){
-		return this.queue.stream().sorted(comparator);
+	public boolean anyCanFire(){
+		return this.queue.parallelStream().anyMatch(Transition::canFire);
 	}
 
 	public ArrayList<Transition> getQueue() {
@@ -48,6 +47,8 @@ public class TransitionPriorityQueue {
 	public void setQueue(ArrayList<Transition> queue) {
 		this.queue = queue;
 	}
+
+	public Stream<Transition> stream(){ return this.queue.stream().sorted(comparator); }
 
 	@Override
 	public boolean equals(Object o) {

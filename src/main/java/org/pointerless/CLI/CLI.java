@@ -59,9 +59,6 @@ public class CLI {
 		@Parameter(names = {"--tMax", "-tM"}, description = "Maximum allowed tick time for reaction network")
 		private Double tMax = 1000.0;
 
-		@Parameter(names = {"--tick", "-t"}, description = "Tick step time")
-		private Double tick = 0.1;
-
 		@Parameter(names = {"--volumes", "-v"}, description = "Override volumes in file", listConverter = VolumeListConverter.class)
 		private List<Long> volumes = null;
 	}
@@ -132,7 +129,7 @@ public class CLI {
 			}
 		}
 
-		PetriNetExecutor petriNetExecutor = new PetriNetExecutor(petriNet, args.tick, args.repeats, printStream);
+		PetriNetExecutor petriNetExecutor = new PetriNetExecutor(petriNet, args.repeats, printStream);
 
 		boolean fired = true;
 		while(fired) {

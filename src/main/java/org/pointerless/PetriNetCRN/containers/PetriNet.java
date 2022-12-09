@@ -21,19 +21,11 @@ public class PetriNet {
 	}
 
 	public boolean canFire() {
-		return this.transitions.stream().anyMatch(Transition::canFire);
+		return this.transitions.anyCanFire();
 	}
 
-	public boolean runTransitions(Double tickStep, Random random){
-		return this.transitions.actionNext(tickStep, this.volume, random);
-	}
-
-	public State getStateForTime(Double t) {
-		HashMap<String, Long> state = new HashMap<>();
-		for(Place place : this.places){
-			state.put(place.getElement(), place.getContains());
-		}
-		return new State(state, t, this.volume.getVolume(), 0);
+	public Double runTransitions(Double time, Random random){
+		return this.transitions.actionNext(time, this.volume, random);
 	}
 
 	public State getStateForTimeAndRepeatNum(Double t, Integer repeatNum) {

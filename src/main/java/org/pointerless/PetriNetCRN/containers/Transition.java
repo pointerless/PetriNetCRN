@@ -15,7 +15,7 @@ public class Transition {
 
 	private Double c;
 
-	private Double timeRemaining;
+	private Double nextOccurrence;
 
 	private Double propensity;
 
@@ -23,7 +23,7 @@ public class Transition {
 		this.inputPlaces = inputPlaces;
 		this.outputPlaces = outputPlaces;
 		this.c = c;
-		this.timeRemaining = 1.0/c;
+		this.nextOccurrence = 1.0/c;
 	}
 
 	public boolean canFire() {
@@ -33,7 +33,7 @@ public class Transition {
 		return true;
 	}
 
-	public void fire() {
+	public Double fire() {
 		if(!canFire()) throw new RuntimeException("Cannot fire!");
 		for(Place place : inputPlaces.keySet()){
 			place.consume(inputPlaces.get(place));
@@ -42,6 +42,7 @@ public class Transition {
 		for(Place place : outputPlaces.keySet()){
 			place.add(outputPlaces.get(place));
 		}
+		return this.nextOccurrence;
 	}
 
 	public HashMap<Place, Long> getInputPlaces() {
@@ -85,13 +86,13 @@ public class Transition {
 						.reduce((a, b) -> a*b).orElseThrow();
 	}
 
-	public Double getTimeRemaining() {
-		return timeRemaining;
+	public Double getNextOccurrence() {
+		return nextOccurrence;
 	}
 
 	public void updateTimeRemaining(Double time, Volume volume, Random random){
 		this.updatePropensity(volume);
-		this.timeRemaining = time - (Math.log(random.nextFloat())/this.propensity);
+		this.nextOccurrence = time - (Math.log(random.nextFloat())/this.propensity);
 	}
 
 	@Override

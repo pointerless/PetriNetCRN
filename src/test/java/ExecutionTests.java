@@ -58,7 +58,7 @@ public class ExecutionTests {
 	@Test
 	void executionTest() throws IOException {
 		PetriNet petriNet = objectMapper.readValue(triFile, PetriNet.class);
-		PetriNetExecutor petriNetExecutor = new PetriNetExecutor(petriNet, 0.1, 1, System.out);
+		PetriNetExecutor petriNetExecutor = new PetriNetExecutor(petriNet, 1, System.out);
 		Random random = new Random();
 
 		boolean fired = true;

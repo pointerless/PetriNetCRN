@@ -1,8 +1,8 @@
 {
   "volume": [100, 200, 500, 1000],
   "places": [
-    {"element": "X", "generator": "f(n) = (0.5*n)-sqrt(n*ln(n))"},
-    {"element": "Y", "generator": "f(n) = (0.5*n)+sqrt(n*ln(n))"}
+    {"element": "X", "generator": "f(n) = (0.5*n)-(sqrt(n*ln(n))/2)"},
+    {"element": "Y", "generator": "f(n) = (0.5*n)+(sqrt(n*ln(n))/2)"}
   ],
   "transitions": [
     {
