@@ -2,6 +2,7 @@ package org.pointerless.PetriNetCRN;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.pointerless.PetriNetCRN.containers.PetriNet;
+import org.pointerless.PetriNetCRN.containers.Place;
 
 import java.io.*;
 import java.util.*;
@@ -14,17 +15,13 @@ public class PetriNetExecutor {
 	private final Integer repeats;
 	private Integer repeatNum = 0;
 
-	private final PrintStream printStream;
+	private final StateOutput stateOutput;
 
-	private static final ObjectMapper objectMapper = SerializationHelper.getObjectMapper();
-
-	private boolean isFirst = true;
-
-	public PetriNetExecutor(PetriNet petriNet, Integer repeats, PrintStream printStream){
+	public PetriNetExecutor(PetriNet petriNet, Integer repeats, StateOutput stateOutput){
 		this.petriNet = petriNet;
 		this.repeats = repeats;
-		this.printStream = printStream;
-		this.printStream.print("[");
+		this.stateOutput = stateOutput;
+		this.stateOutput.start(petriNet.getPlaces().stream().map(Place::getElement).sorted().collect(Collectors.toList()));
 	}
 
 	public boolean step(Random random, Double tMax) throws IOException {
@@ -32,9 +29,7 @@ public class PetriNetExecutor {
 			return this.checkForRepeat();
 		}
 		t = petriNet.runTransitions(t, random);
-		if(!isFirst) printStream.print(",");
-		else isFirst = false;
-		printStream.write(objectMapper.writeValueAsBytes(petriNet.getStateForTimeAndRepeatNum(t, repeatNum)));
+		stateOutput.write(petriNet.getStateForTimeAndRepeatNum(t, repeatNum));
 		return true;
 	}
 
@@ -48,7 +43,7 @@ public class PetriNetExecutor {
 			this.t = 0.0;
 			return true;
 		}
-		printStream.print("]");
+		stateOutput.end();
 		return false;
 	}
 
@@ -64,31 +59,4 @@ public class PetriNetExecutor {
 		return this.t;
 	}
 
-	/* TODO implement streamable
-	public static void writeStateHistoryToCSV(File output, ArrayList<State> states){
-		if(states.size() == 0) return;
-		ArrayList<String> elements = new ArrayList<>(states.get(0).getState().keySet());
-		ArrayList<String> columns = new ArrayList<>(elements);
-		columns.add("time");
-		columns.add("volume");
-		columns.add("repeatNum");
-		try (PrintWriter printWriter = new PrintWriter(output)){
-			printWriter.println(toCSVFormat(columns));
-			states.forEach(state -> {
-				ArrayList<String> line = new ArrayList<>(columns.size());
-				elements.forEach(element -> line.add(state.getState().get(element).toString()));
-				line.add(state.getTime().toString());
-				line.add(state.getVolume().toString());
-				line.add(state.getRepeatNum().toString());
-				printWriter.println(toCSVFormat(line));
-			});
-		}catch (FileNotFoundException e){
-			throw new RuntimeException("Could not open output file: '"+output+"'");
-		}
-	}
-	 */
-
-	private static <E, T extends Collection<E>> String  toCSVFormat(T values){
-		return values.stream().map(Object::toString).collect(Collectors.joining(","));
-	}
 }

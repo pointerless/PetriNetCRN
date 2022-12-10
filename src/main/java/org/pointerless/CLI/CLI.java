@@ -7,6 +7,7 @@ import com.beust.jcommander.Parameter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.pointerless.PetriNetCRN.PetriNetExecutor;
 import org.pointerless.PetriNetCRN.SerializationHelper;
+import org.pointerless.PetriNetCRN.StateOutput;
 import org.pointerless.PetriNetCRN.containers.PetriNet;
 import org.pointerless.PetriNetCRN.containers.Volume;
 
@@ -49,9 +50,8 @@ public class CLI {
 		@Parameter(names = {"--outJSON", "-oJ"}, description = "Output JSON file path")
 		private String outputJSON = "";
 
-		// TODO: Implement stream based JSON output
-		//@Parameter(names = {"--outCSV", "-oC"}, description = "Output CSV file path")
-		//private String outputCSV = "";
+		@Parameter(names = {"--outCSV", "-oC"}, description = "Output CSV file path")
+		private String outputCSV = "";
 
 		@Parameter(names = {"--repeats", "-r"}, description = "Number of repeats to do")
 		private int repeats = 1;
@@ -113,23 +113,40 @@ public class CLI {
 			System.exit(-1);
 		}
 
-		PrintStream printStream = System.out;
+		StateOutput stateOutput = null;
 
-		if(!args.outputJSON.isEmpty()){
+		if(!args.outputJSON.isEmpty()) {
 			try {
 				File outputFile = new File(args.outputJSON);
 				if (!outputFile.canWrite()) {
 					throw new IllegalArgumentException("Cannot write to file '" + args.outputJSON + "'");
 				}
 				FileOutputStream outputFileStream = new FileOutputStream(outputFile);
-				printStream = new PrintStream(outputFileStream, true);
-			}catch(Exception e){
-				System.err.println("Could not open output file: "+e.getMessage());
+				stateOutput = new StateOutput();
+				stateOutput.jsonOutput(new PrintStream(outputFileStream, true));
+			} catch (Exception e) {
+				System.err.println("Could not open output file: " + e.getMessage());
 				System.exit(-1);
 			}
+		}else if(!args.outputCSV.isEmpty()){
+			try {
+				File outputFile = new File(args.outputCSV);
+				if (!outputFile.canWrite()) {
+					throw new IllegalArgumentException("Cannot write to file '" + args.outputCSV + "'");
+				}
+				FileOutputStream outputFileStream = new FileOutputStream(outputFile);
+				stateOutput = new StateOutput();
+				stateOutput.csvOutput(new PrintStream(outputFileStream, true));
+			} catch (Exception e) {
+				System.err.println("Could not open output file: " + e.getMessage());
+				System.exit(-1);
+			}
+		}else{
+			stateOutput = new StateOutput();
+			stateOutput.jsonOutput(System.out);
 		}
 
-		PetriNetExecutor petriNetExecutor = new PetriNetExecutor(petriNet, args.repeats, printStream);
+		PetriNetExecutor petriNetExecutor = new PetriNetExecutor(petriNet, args.repeats, stateOutput);
 
 		boolean fired = true;
 		while(fired) {

@@ -2,14 +2,15 @@
   "volume": [100, 200, 500, 1000],
   "places": [
     {"element": "X", "generator": "f(n) = (0.5*n)-(sqrt(n*ln(n))/2)"},
-    {"element": "Y", "generator": "f(n) = (0.5*n)+(sqrt(n*ln(n))/2)"}
+    {"element": "Y", "generator": "f(n) = (0.5*n)+(sqrt(n*ln(n))/2)"},
+    {"element": "B2", "volumeRatio": 0.0}
   ],
   "transitions": [
     {
       "inputPlaces": [
         {
           "element": "X",
-          "amount": 2
+          "amount": 1
         },
         {
           "element": "Y",
@@ -17,9 +18,9 @@
         } ],
       "outputPlaces": [
         {
-          "element": "X",
-          "amount": 3
-        } ],
+          "element": "B2",
+          "amount": 1
+        }],
       "c": 1.0
     },
     {
@@ -28,8 +29,26 @@
           "element": "X",
           "amount": 1
         },{
+          "element": "B2",
+          "amount": 1
+        }
+      ],
+      "outputPlaces": [
+        {
+          "element": "X",
+          "amount": 3
+        }
+      ],
+      "c": 1.0
+    },
+    {
+      "inputPlaces": [
+        {
           "element": "Y",
-          "amount": 2
+          "amount": 1
+        },{
+          "element": "B2",
+          "amount": 1
         }
       ],
       "outputPlaces": [

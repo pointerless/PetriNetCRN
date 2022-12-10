@@ -1,5 +1,7 @@
 package org.pointerless.PetriNetCRN.containers;
 
+import jakarta.persistence.*;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Objects;

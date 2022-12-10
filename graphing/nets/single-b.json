@@ -19,9 +19,33 @@
       "outputPlaces": [
         {
           "element": "B",
-          "amount": 2
-        } ],
-      "c": 1.0
+          "amount": 1
+        },{
+          "element": "X",
+          "amount": 1
+        }],
+      "c": 0.5
+    },
+    {
+      "inputPlaces": [
+        {
+          "element": "X",
+          "amount": 1
+        },{
+          "element": "B",
+          "amount": 1
+        }
+      ],
+      "outputPlaces": [
+        {
+          "element": "B",
+          "amount": 1
+        },{
+          "element": "Y",
+          "amount": 1
+        }
+      ],
+      "c": 0.5
     },
     {
       "inputPlaces": [
@@ -40,8 +64,7 @@
         }
       ],
       "c": 1.0
-    },
-    {
+    },{
       "inputPlaces": [
         {
           "element": "Y",

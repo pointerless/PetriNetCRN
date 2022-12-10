@@ -13,6 +13,7 @@ class SimulationOptions:
         self._volumes = None
         self._use_temp = False
         self.file_path = None
+        self._format = "json"
 
     def net_from_json(self, json_net):
         self._net_data = json_net
@@ -38,6 +39,12 @@ class SimulationOptions:
 
     def use_temp_file(self, use_temp_file):
         self._use_temp = use_temp_file
+        self.file_path = tempfile.NamedTemporaryFile()
+
+    def set_format(self, new_format):
+        if new_format not in ["json", "csv"]:
+            raise AttributeError("Not a format: "+new_format)
+        self._format = new_format
 
     def build_command(self):
         if self._net_data is None:
@@ -48,8 +55,10 @@ class SimulationOptions:
         if self._volumes is not None:
             basic += ["--volumes", ",".join([str(volume) for volume in self._volumes])]
         if self._use_temp:
-            self.file_path = tempfile.NamedTemporaryFile()
-            basic += ["--outJSON", self.file_path.name]
+            if self._format == "json":
+                basic += ["--outJSON", self.file_path.name]
+            else:
+                basic += ["--outCSV", self.file_path.name]
         return basic
 
 
@@ -60,16 +69,24 @@ def run_simulation(simulation_options):
     """
     if not simulation_options._use_temp:
         net_output = subprocess.Popen(simulation_options.build_command(), stdout=subprocess.PIPE, encoding="utf-8")
-        return pd.read_json(net_output.stdout, encoding="utf-8")
+        if simulation_options._format == "json":
+            return pd.read_json(net_output.stdout, encoding="utf-8")
+        else:
+            return pd.read_csv(net_output.stdout, encoding="utf-8")
     else:
         subprocess.run(simulation_options.build_command())
-        return pd.read_json(simulation_options.file_path.name, encoding="utf-8")
+        if simulation_options._format == "json":
+            return pd.read_json(simulation_options.file_path.name, encoding="utf-8")
+        else:
+            return pd.read_csv(simulation_options.file_path.name, encoding="utf-8")
 
 
 if __name__ == "__main__":
     options = SimulationOptions()
     options.set_java_path("/home/harry/.jdks/openjdk-19.0.1/bin/java")
     options.net_from_file("../src/main/resources/net2.json")
+    options.use_temp_file(True)
+    options.set_format("csv")
     options.set_max_time(5000)
     options.set_volumes([110, 220])
     output = run_simulation(options)

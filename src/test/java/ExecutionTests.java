@@ -2,6 +2,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.pointerless.PetriNetCRN.SerializationHelper;
+import org.pointerless.PetriNetCRN.StateOutput;
 import org.pointerless.PetriNetCRN.containers.*;
 import org.pointerless.PetriNetCRN.PetriNetExecutor;
 
@@ -58,7 +59,9 @@ public class ExecutionTests {
 	@Test
 	void executionTest() throws IOException {
 		PetriNet petriNet = objectMapper.readValue(triFile, PetriNet.class);
-		PetriNetExecutor petriNetExecutor = new PetriNetExecutor(petriNet, 1, System.out);
+		StateOutput stateOutput = new StateOutput();
+		stateOutput.csvOutput(System.out);
+		PetriNetExecutor petriNetExecutor = new PetriNetExecutor(petriNet, 1, stateOutput);
 		Random random = new Random();
 
 		boolean fired = true;
