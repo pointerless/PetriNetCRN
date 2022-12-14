@@ -18,6 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+
+/**
+ * Command Line Tool for running samples.
+ */
 public class CLI {
 
 	public static class Args {
@@ -47,11 +51,11 @@ public class CLI {
 		@Parameter(names = {"--help", "-h"}, description = "Print this help dialogue", help = true)
 		private boolean help = false;
 
-		@Parameter(names = {"--outJSON", "-oJ"}, description = "Output JSON file path")
-		private String outputJSON = "";
+		@Parameter(names = {"--JSON", "-J"}, description = "Output JSON")
+		private boolean outputJSON = false;
 
-		@Parameter(names = {"--outCSV", "-oC"}, description = "Output CSV file path")
-		private String outputCSV = "";
+		@Parameter(names = {"--CSV", "-C"}, description = "Output CSV")
+		private boolean outputCSV = false;
 
 		@Parameter(names = {"--repeats", "-r"}, description = "Number of repeats to do")
 		private int repeats = 1;
@@ -61,6 +65,12 @@ public class CLI {
 
 		@Parameter(names = {"--volumes", "-v"}, description = "Override volumes in file", listConverter = VolumeListConverter.class)
 		private List<Long> volumes = null;
+
+		@Parameter(names = {"--zip", "-z"}, description = "Create zip by volumes")
+		private boolean zip = false;
+
+		@Parameter(names = {"--out", "-o"}, description = "Output file path")
+		private String output = "";
 	}
 
 
@@ -115,31 +125,41 @@ public class CLI {
 
 		StateOutput stateOutput = null;
 
-		if(!args.outputJSON.isEmpty()) {
-			try {
-				File outputFile = new File(args.outputJSON);
-				if (!outputFile.canWrite()) {
-					throw new IllegalArgumentException("Cannot write to file '" + args.outputJSON + "'");
+		if(args.outputJSON) {
+			if(!args.output.isEmpty()) {
+				try {
+					File outputFile = new File(args.output);
+					if (!outputFile.canWrite()) {
+						throw new IllegalArgumentException("Cannot write to file '" + args.output + "'");
+					}
+					FileOutputStream outputFileStream = new FileOutputStream(outputFile);
+					stateOutput = new StateOutput();
+					stateOutput.jsonOutput(new PrintStream(outputFileStream, true));
+				} catch (Exception e) {
+					System.err.println("Could not open output file: " + e.getMessage());
+					System.exit(-1);
 				}
-				FileOutputStream outputFileStream = new FileOutputStream(outputFile);
+			}else{
 				stateOutput = new StateOutput();
-				stateOutput.jsonOutput(new PrintStream(outputFileStream, true));
-			} catch (Exception e) {
-				System.err.println("Could not open output file: " + e.getMessage());
-				System.exit(-1);
+				stateOutput.jsonOutput(System.out);
 			}
-		}else if(!args.outputCSV.isEmpty()){
-			try {
-				File outputFile = new File(args.outputCSV);
-				if (!outputFile.canWrite()) {
-					throw new IllegalArgumentException("Cannot write to file '" + args.outputCSV + "'");
+		}else if(args.outputCSV){
+			if(!args.output.isEmpty()) {
+				try {
+					File outputFile = new File(args.output);
+					if (!outputFile.canWrite()) {
+						throw new IllegalArgumentException("Cannot write to file '" + args.output + "'");
+					}
+					FileOutputStream outputFileStream = new FileOutputStream(outputFile);
+					stateOutput = new StateOutput();
+					stateOutput.csvOutput(new PrintStream(outputFileStream, true));
+				} catch (Exception e) {
+					System.err.println("Could not open output file: " + e.getMessage());
+					System.exit(-1);
 				}
-				FileOutputStream outputFileStream = new FileOutputStream(outputFile);
+			}else{
 				stateOutput = new StateOutput();
-				stateOutput.csvOutput(new PrintStream(outputFileStream, true));
-			} catch (Exception e) {
-				System.err.println("Could not open output file: " + e.getMessage());
-				System.exit(-1);
+				stateOutput.csvOutput(System.out);
 			}
 		}else{
 			stateOutput = new StateOutput();
@@ -155,9 +175,20 @@ public class CLI {
 			} catch (IOException e) {
 				System.err.println("Could not run step: "+e.getMessage());
 				System.exit(-1);
+			} catch (InterruptedException e) {
+				System.err.println("OutputThread interrupted: "+e.getMessage());
+				System.exit(-1);
 			}
 		}
 
+		if (petriNetExecutor.getThreadHandle().isAlive()){
+			try {
+				petriNetExecutor.getThreadHandle().join(2000);
+			} catch (InterruptedException e) {
+				System.err.println("Couldn't join thread: "+e.getMessage());
+				System.exit(-1);
+			}
+		}
 	}
 
 }

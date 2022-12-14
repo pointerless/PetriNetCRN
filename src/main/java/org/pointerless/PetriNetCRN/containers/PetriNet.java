@@ -5,6 +5,11 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.Random;
 
+
+/**
+ * PetriNet class, represents a Petri Net for a set of
+ * transitions and places with a given volume.
+ */
 public class PetriNet {
 
 	private ArrayList<Place> places;
@@ -13,10 +18,13 @@ public class PetriNet {
 
 	private Volume volume;
 
-	public PetriNet(ArrayList<Place> places, ArrayList<Transition> transitions, Volume volume){
+	private final Place consensusElement;
+
+	public PetriNet(ArrayList<Place> places, ArrayList<Transition> transitions, Volume volume, Place consensusElement){
 		this.places = places;
 		this.transitions = new TransitionPriorityQueue(transitions);
 		this.volume = volume;
+		this.consensusElement = consensusElement;
 		this.places.forEach(place -> place.updateContainsFromVolume(volume));
 	}
 
@@ -75,12 +83,22 @@ public class PetriNet {
 		}
 	}
 
+	public Place getConsensusElement() {
+		return consensusElement;
+	}
+
+	public boolean hasConsensus(){
+		if(consensusElement == null) return false;
+		return consensusElement.getContains().equals(volume.getVolume());
+	}
+
 	@Override
 	public String toString() {
 		return "PetriNet{\n" +
 				"places=" + places +
 				"\n, transitions=" + transitions +
 				"\n, volume=" + volume +
+				"\n, consensusElement=" + consensusElement +
 				"\n}";
 	}
 
@@ -89,11 +107,12 @@ public class PetriNet {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		PetriNet petriNet = (PetriNet) o;
-		return Objects.equals(places, petriNet.places) && Objects.equals(transitions, petriNet.transitions);
+		return Objects.equals(places, petriNet.places) && Objects.equals(transitions, petriNet.transitions) &&
+				Objects.equals(consensusElement, petriNet.consensusElement);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(places, transitions);
+		return Objects.hash(places, transitions, consensusElement);
 	}
 }

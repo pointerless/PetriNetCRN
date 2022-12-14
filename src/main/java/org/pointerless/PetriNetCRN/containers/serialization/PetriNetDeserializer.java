@@ -1,22 +1,25 @@
 package org.pointerless.PetriNetCRN.containers.serialization;
 
-import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import com.fasterxml.jackson.databind.node.LongNode;
 import org.pointerless.PetriNetCRN.containers.PetriNet;
 import org.pointerless.PetriNetCRN.containers.Place;
 import org.pointerless.PetriNetCRN.containers.Transition;
 import org.pointerless.PetriNetCRN.containers.Volume;
 
-import javax.script.ScriptException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+
+/**
+ * PetriNetDeserializer class, creates PetriNet and all other
+ * components from json. Use SerializationHelper.getObjectMapper()
+ * to get an object mapper with this module loaded.
+ */
 public class PetriNetDeserializer extends StdDeserializer<PetriNet> {
 
 	public PetriNetDeserializer(){
@@ -30,8 +33,7 @@ public class PetriNetDeserializer extends StdDeserializer<PetriNet> {
 	@Override
 	public PetriNet deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
 		JsonNode node = jsonParser.getCodec().readTree(jsonParser);
-		ArrayList<Place> places = new ArrayList<>();
-		HashMap<String, Place> placeLookup = new HashMap<>();
+
 		Volume volume;
 		if(node.get("volume").isLong() || node.get("volume").isNumber())
 			volume = new Volume(node.get("volume").asLong());
@@ -48,6 +50,9 @@ public class PetriNetDeserializer extends StdDeserializer<PetriNet> {
 		}else{
 			throw new IOException("Volume is of unusable type: '"+node.get("volume").getNodeType().toString()+"'");
 		}
+
+		ArrayList<Place> places = new ArrayList<>();
+		HashMap<String, Place> placeLookup = new HashMap<>();
 		for(JsonNode place : node.get("places")){
 			Place newPlace;
 			if(place.has("volumeRatio") && place.get("volumeRatio").isNumber()){
@@ -61,6 +66,16 @@ public class PetriNetDeserializer extends StdDeserializer<PetriNet> {
 			newPlace.updateContainsFromVolume(volume);
 			places.add(newPlace);
 			placeLookup.put(newPlace.getElement(), newPlace);
+		}
+
+		Place consensusElement = null;
+		if(node.has("consensusElement") && node.get("consensusElement").isTextual()){
+			if(!placeLookup.containsKey(node.get("consensusElement").asText())){
+				throw new IOException("Consensus element '"+node.get("consensusElement").asText()+"' not in places");
+			}
+			consensusElement = placeLookup.get(node.get("consensusElement").asText());
+		}else if(node.has("consensusElement")){
+			throw new IOException("Invalid consensus element");
 		}
 
 		ArrayList<Transition> transitions = new ArrayList<>();
@@ -83,6 +98,6 @@ public class PetriNetDeserializer extends StdDeserializer<PetriNet> {
 			}
 			transitions.add(new Transition(inputPlaces, outputPlaces, transition.get("c").asDouble()));
 		}
-		return new PetriNet(places, transitions, volume);
+		return new PetriNet(places, transitions, volume, consensusElement);
 	}
 }

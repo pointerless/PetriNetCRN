@@ -7,6 +7,11 @@ import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
+
+/**
+ * Transition class, represents a transition within
+ * a Petri Net (essentially a reaction)
+ */
 public class Transition {
 
 	private HashMap<Place, Long> inputPlaces;

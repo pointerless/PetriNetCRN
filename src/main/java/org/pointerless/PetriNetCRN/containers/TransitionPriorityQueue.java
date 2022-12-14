@@ -3,6 +3,12 @@ package org.pointerless.PetriNetCRN.containers;
 import java.util.*;
 import java.util.stream.Stream;
 
+
+/**
+ * Priority Queue to automatically find the next
+ * transition and update next occurrences on
+ * system change.
+ */
 public class TransitionPriorityQueue {
 
 	public static class TransitionComparator implements Comparator<Transition> {

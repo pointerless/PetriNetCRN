@@ -1,11 +1,15 @@
 package org.pointerless.PetriNetCRN.containers;
 
-import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Objects;
 
+
+/**
+ * State class, represents the state of the
+ * system at a point in time.
+ */
 public class State implements Serializable {
 
 	private HashMap<String, Long> state;
@@ -15,6 +19,8 @@ public class State implements Serializable {
 	private Long volume;
 
 	private Integer repeatNum;
+
+	private boolean isEnd = false;
 
 	public State(HashMap<String, Long> state, Double time, Long volume, Integer repeatNum){
 		this.state = state;
@@ -53,6 +59,14 @@ public class State implements Serializable {
 
 	public void setRepeatNum(Integer repeatNum) {
 		this.repeatNum = repeatNum;
+	}
+
+	public boolean isEnd() {
+		return isEnd;
+	}
+
+	public void setEnd(boolean end) {
+		isEnd = end;
 	}
 
 	@Override

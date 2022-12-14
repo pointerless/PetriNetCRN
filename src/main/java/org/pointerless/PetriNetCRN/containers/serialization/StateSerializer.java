@@ -7,6 +7,11 @@ import org.pointerless.PetriNetCRN.containers.State;
 
 import java.io.IOException;
 
+/**
+ * StateSerializer class, creates a json version of
+ * a State. Use SerializationHelper.getObjectMapper()
+ * to get an object mapper with this module loaded.
+ */
 public final class StateSerializer extends StdSerializer<State> {
 
 	public StateSerializer() {

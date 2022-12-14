@@ -2,6 +2,10 @@ package org.pointerless.PetriNetCRN.containers;
 
 import java.util.List;
 
+
+/**
+ * System volume, holds multiple for repeated samples
+ */
 public class Volume {
 
 	private Long volume;

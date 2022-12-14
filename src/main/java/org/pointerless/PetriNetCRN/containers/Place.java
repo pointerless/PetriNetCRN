@@ -1,10 +1,15 @@
 package org.pointerless.PetriNetCRN.containers;
 
-import org.mariuszgromada.math.mxparser.Expression;
 import org.mariuszgromada.math.mxparser.Function;
 
 import java.util.Objects;
 
+
+/**
+ * Place class, represents a place within a Petri Net,
+ * essentially a holder for a quantity of a specific
+ * element
+ */
 public class Place {
 
 	private String element;

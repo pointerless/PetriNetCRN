@@ -17,7 +17,7 @@ public class ExecutionTests {
 	private static ObjectMapper objectMapper;
 	private static File exampleNetFile;
 
-	private static File net2File;
+	private static File doubleBFile;
 
 	private static File triFile;
 
@@ -29,36 +29,39 @@ public class ExecutionTests {
 		ClassLoader classLoader = ExecutionTests.class.getClassLoader();
 		exampleNetFile = new File(Objects.requireNonNull(classLoader.getResource(resourceName)).getFile());
 
-		resourceName = "net2.json";
-		net2File = new File(Objects.requireNonNull(classLoader.getResource(resourceName)).getFile());
-
 		resourceName = "tri-molecular.json";
 		triFile = new File(Objects.requireNonNull(classLoader.getResource(resourceName)).getFile());
+
+		resourceName = "double-b.json";
+		doubleBFile = new File(Objects.requireNonNull(classLoader.getResource(resourceName)).getFile());
 	}
 
 	@Test
 	void queueTest() throws IOException {
-		PetriNet petriNet = objectMapper.readValue(triFile, PetriNet.class);
+		PetriNet petriNet = objectMapper.readValue(exampleNetFile, PetriNet.class);
 
 		TransitionPriorityQueue q = petriNet.getTransitions();
 		ArrayList<Place> places = petriNet.getPlaces();
+
 		Random random = new Random();
 		q.stream().forEach(System.out::println);
 		places.forEach(System.out::print);
 		System.out.println();
-		q.actionNext(1.25, petriNet.getVolume(), random);
+		Double t = q.actionNext(0.0, petriNet.getVolume(), random);
+		System.out.println("T="+t.toString());
 		q.stream().forEach(System.out::println);
 		places.forEach(System.out::print);
 		System.out.println();
-		q.actionNext(1.25, petriNet.getVolume(), random);
+		t = q.actionNext(t, petriNet.getVolume(), random);
+		System.out.println("T="+t.toString());
 		q.stream().forEach(System.out::println);
 		places.forEach(System.out::print);
 		System.out.println();
 	}
 
 	@Test
-	void executionTest() throws IOException {
-		PetriNet petriNet = objectMapper.readValue(triFile, PetriNet.class);
+	void executionTest() throws IOException, InterruptedException {
+		PetriNet petriNet = objectMapper.readValue(exampleNetFile, PetriNet.class);
 		StateOutput stateOutput = new StateOutput();
 		stateOutput.csvOutput(System.out);
 		PetriNetExecutor petriNetExecutor = new PetriNetExecutor(petriNet, 1, stateOutput);

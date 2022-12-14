@@ -1,13 +1,18 @@
 package org.pointerless.PetriNetCRN;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.pointerless.PetriNetCRN.containers.PetriNet;
 import org.pointerless.PetriNetCRN.containers.Place;
+import org.pointerless.PetriNetCRN.containers.State;
 
 import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
+
+/**
+ * PetriNetExecutor class, contains all code to execute
+ * a set of samples.
+ */
 public class PetriNetExecutor {
 
 	private PetriNet petriNet;
@@ -17,20 +22,30 @@ public class PetriNetExecutor {
 
 	private final StateOutput stateOutput;
 
+	private final OutputThread outputThread;
+
+	private final Thread threadHandle;
+
 	public PetriNetExecutor(PetriNet petriNet, Integer repeats, StateOutput stateOutput){
 		this.petriNet = petriNet;
 		this.repeats = repeats;
 		this.stateOutput = stateOutput;
-		this.stateOutput.start(petriNet.getPlaces().stream().map(Place::getElement).sorted().collect(Collectors.toList()));
+		this.stateOutput.writeStart(petriNet.getPlaces().stream().map(Place::getElement).sorted().collect(Collectors.toList()));
+		this.outputThread = new OutputThread(stateOutput);
+		this.threadHandle = new Thread(outputThread);
+		this.threadHandle.start();
 	}
 
-	public boolean step(Random random, Double tMax) throws IOException {
-		if(t > tMax || !petriNet.canFire()){
-			return this.checkForRepeat();
-		}
+	public boolean step(Random random, Double tMax) throws IOException, InterruptedException {
 		t = petriNet.runTransitions(t, random);
-		stateOutput.write(petriNet.getStateForTimeAndRepeatNum(t, repeatNum));
-		return true;
+		boolean canRepeat = true;
+		State state = petriNet.getStateForTimeAndRepeatNum(t, repeatNum);
+		if(t >= tMax  || petriNet.hasConsensus() || !petriNet.canFire()){
+			canRepeat = this.checkForRepeat();
+		}
+		state.setEnd(!canRepeat);
+		stateOutput.add(state);
+		return canRepeat;
 	}
 
 	private boolean checkForRepeat(){
@@ -43,7 +58,6 @@ public class PetriNetExecutor {
 			this.t = 0.0;
 			return true;
 		}
-		stateOutput.end();
 		return false;
 	}
 
@@ -57,6 +71,10 @@ public class PetriNetExecutor {
 
 	public Double getT() {
 		return this.t;
+	}
+
+	public Thread getThreadHandle(){
+		return this.threadHandle;
 	}
 
 }

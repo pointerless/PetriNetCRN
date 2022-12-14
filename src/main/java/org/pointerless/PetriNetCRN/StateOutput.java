@@ -6,16 +6,20 @@ import org.pointerless.PetriNetCRN.containers.State;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.stream.Collectors;
 
+
+/**
+ * StateOutput class, outputs states in configured format
+ */
 public class StateOutput {
 
 	public enum Type {
 		JSONPrintStream,
 		CSVPrintStream,
-		DataBase
+		DataBase,
 	}
 
 	private Type type;
@@ -26,7 +30,7 @@ public class StateOutput {
 
 	private final ObjectMapper objectMapper = SerializationHelper.getObjectMapper();
 
-	private boolean jsonIsFirst = true;
+	private final ArrayBlockingQueue<State> queue = new ArrayBlockingQueue<>(1024);
 
 	public void dbOutput(String dbURL){
 		this.dbURL = dbURL;
@@ -50,7 +54,7 @@ public class StateOutput {
 		}
 	}
 
-	public void start(List<String> elements){
+	public void writeStart(List<String> elements){
 		switch(type){
 			case JSONPrintStream -> this.printStream.print("[");
 			case CSVPrintStream -> this.writeCSVColumns(elements);
@@ -58,7 +62,7 @@ public class StateOutput {
 		}
 	}
 
-	public void end(){
+	public void writeEnd(){
 		switch(type){
 			case JSONPrintStream -> this.printStream.print("]");
 			case CSVPrintStream -> this.printStream.println();
@@ -67,10 +71,8 @@ public class StateOutput {
 	}
 
 	private void writeJSON(State state) throws IOException {
-		if(!jsonIsFirst){
+		if(!state.isEnd()){
 			printStream.print(",");
-		}else{
-			jsonIsFirst = false;
 		}
 		printStream.write(objectMapper.writeValueAsBytes(state));
 	}
@@ -80,7 +82,7 @@ public class StateOutput {
 		columns.add("time");
 		columns.add("volume");
 		columns.add("repeatNum");
-		printStream.println(toCSVFormat(columns));
+		printStream.println(SerializationHelper.toCSVFormat(columns));
 	}
 
 	private void writeCSV(State state){
@@ -90,11 +92,15 @@ public class StateOutput {
 		line.add(state.getTime().toString());
 		line.add(state.getVolume().toString());
 		line.add(state.getRepeatNum().toString());
-		printStream.println(toCSVFormat(line));
+		printStream.println(SerializationHelper.toCSVFormat(line));
 	}
 
-	private static <E, T extends Collection<E>> String  toCSVFormat(T values){
-		return values.stream().map(Object::toString).collect(Collectors.joining(","));
+	public ArrayBlockingQueue<State> getQueue() {
+		return queue;
+	}
+
+	public void add(State state) throws InterruptedException {
+		this.queue.put(state);
 	}
 
 }
