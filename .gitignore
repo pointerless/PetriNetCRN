@@ -46,4 +46,4 @@ build/
 ### Symlinked JAR ###
 /graphing/PetriNetCRN.jar
 ### Report ###
-report/*
+/report

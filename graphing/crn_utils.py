@@ -62,15 +62,19 @@ class SimulationOptions:
             raise AttributeError("Not a format: "+new_format)
         self._format = new_format
 
-    def auto_read(self, to_read):
-        if self._format == "json":
-            if self._dtype is not None:
-                return pd.read_json(to_read, encoding="utf-8", dtype=self._dtype)
-            return pd.read_json(to_read, encoding="utf-8")
+    @staticmethod
+    def read(path, fmt, dtype=None):
+        if fmt == "json":
+            if dtype is not None:
+                return pd.read_json(path, encoding="utf-8", dtype=dtype)
+            return pd.read_json(path, encoding="utf-8")
         else:
-            if self._dtype is not None:
-                return pd.read_csv(to_read, encoding="utf-8", dtype=self._dtype, engine="pyarrow")
-            return pd.read_csv(to_read, encoding="utf-8", engine="pyarrow")
+            if dtype is not None:
+                return pd.read_csv(path, encoding="utf-8", dtype=dtype, engine="pyarrow")
+            return pd.read_csv(path, encoding="utf-8", engine="pyarrow")
+
+    def auto_read(self, to_read):
+        return SimulationOptions.read(to_read, self._format, self._dtype)
 
     def set_dtype(self, dtype_dict):
         self._dtype = dtype_dict

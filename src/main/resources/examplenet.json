@@ -1,6 +1,6 @@
 {
   "consensusElement": "B",
-  "volume": [200, 300, 400],
+  "volume": [200],
   "places": [
     {"element": "A", "generator": "f(n) = (0.5*n)-sqrt(n*ln(n))/2"},
     {"element": "B", "generator": "f(n) = (0.5*n)+sqrt(n*ln(n))/2"},
@@ -22,7 +22,7 @@
           "element": "C",
           "amount": 1
         } ],
-      "c": 1.0
+      "k": 1.0
     },
     {
       "inputPlaces": [
@@ -39,7 +39,7 @@
           "element": "A",
           "amount": 3
         } ],
-      "c": 1.0
+      "k": 1.0
     }
   ]
 }

@@ -78,10 +78,10 @@
               }
             }
           },
-          "c": {
+          "k": {
             "type": "number",
             "minimum": 0.0,
-            "description": "Stochastic rate of reaction, will be used to calculated propensity"
+            "description": "Kinetic rate of reaction, will be used to calculated propensity"
           }
         }
       }

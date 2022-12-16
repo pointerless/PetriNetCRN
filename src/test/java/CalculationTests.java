@@ -28,7 +28,7 @@ public class CalculationTests {
 			place.updateContainsFromVolume(volume);
 			switch (place.getElement()) {
 				case "X", "Y" -> input.put(place, 1L);
-				case "O" -> output.put(place, 1L);
+				default -> output.put(place, 1L);
 			}
 		});
 
@@ -36,10 +36,14 @@ public class CalculationTests {
 		Random random = new Random();
 
 		t.updateTimeRemaining(0.0, volume, random);
-		System.out.println(t.getC());
-		System.out.println(t.getPropensity());
-		System.out.println(t.getNextOccurrence());
+		assert(t.getPropensity() == 25.0);
+		t.fire();
+		input.forEach((place, amount) -> {
+			assert(place.getContains() == 49L);
+		});
+		output.forEach((place, amount) -> {
+			assert(place.getContains() == 1L);
+		});
 	}
-
 
 }

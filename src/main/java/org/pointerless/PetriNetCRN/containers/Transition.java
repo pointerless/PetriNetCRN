@@ -18,17 +18,17 @@ public class Transition {
 
 	private HashMap<Place, Long> outputPlaces;
 
-	private Double c;
+	private Double k;
 
 	private Double nextOccurrence;
 
 	private Double propensity;
 
-	public Transition(HashMap<Place, Long> inputPlaces, HashMap<Place, Long> outputPlaces, Double c) {
+	public Transition(HashMap<Place, Long> inputPlaces, HashMap<Place, Long> outputPlaces, Double k) {
 		this.inputPlaces = inputPlaces;
 		this.outputPlaces = outputPlaces;
-		this.c = c;
-		this.nextOccurrence = 1.0/c;
+		this.k = k;
+		this.nextOccurrence = 1.0/ k;
 	}
 
 	public boolean canFire() {
@@ -66,12 +66,12 @@ public class Transition {
 		this.outputPlaces = outputPlaces;
 	}
 
-	public Double getC() {
-		return c;
+	public Double getK() {
+		return k;
 	}
 
-	public void setC(Double c) {
-		this.c = c;
+	public void setK(Double k) {
+		this.k = k;
 	}
 
 	public Double getPropensity() {
@@ -85,8 +85,12 @@ public class Transition {
 				.orElseThrow();
 	}
 
+	private Long getOrder(){
+		return this.inputPlaces.values().stream().reduce(Long::sum).orElseThrow();
+	}
+
 	private void updatePropensity(Volume volume) {
-		this.propensity = Stream.concat(Stream.of(this.c/volume.getVolume()),
+		this.propensity = Stream.concat(Stream.of(this.k /Math.pow(volume.getVolume(), getOrder() - 1)),
 				inputPlaces.entrySet().stream().map(p -> choose(p.getKey().getContains(), p.getValue())))
 						.reduce((a, b) -> a*b).orElseThrow();
 	}
@@ -110,7 +114,7 @@ public class Transition {
 				outputPlaces.entrySet().stream()
 						.map(placeAmount -> placeAmount.getValue()+"*"+placeAmount.getKey().getElement())
 						.collect(Collectors.joining(" + ")) +
-				", c=" + c +
+				", k=" + k +
 				", propensity=" + propensity +
 				'}';
 	}
@@ -120,11 +124,11 @@ public class Transition {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Transition that = (Transition) o;
-		return inputPlaces.equals(that.inputPlaces) && outputPlaces.equals(that.outputPlaces) && c.equals(that.c);
+		return inputPlaces.equals(that.inputPlaces) && outputPlaces.equals(that.outputPlaces) && k.equals(that.k);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(inputPlaces, outputPlaces, c);
+		return Objects.hash(inputPlaces, outputPlaces, k);
 	}
 }

@@ -69,8 +69,24 @@ public class ExecutionTests {
 
 		boolean fired = true;
 		while(fired) {
-			fired = petriNetExecutor.step(random, 1000.0);
+			fired = petriNetExecutor.step(random, Double.POSITIVE_INFINITY);
 		}
+
+		assert(!petriNet.canFire());
+		petriNet.getPlaces().forEach(place -> {
+			switch (place.getElement()) {
+				case "A" -> {
+					assert(!place.getContains().equals(0L));
+				}
+				case "B" -> {
+					assert(place.getContains().equals(0L) || place.getContains().equals(1L));
+				}
+				case "C" ->{
+					assert(place.getContains().equals(0L));
+				}
+			}
+		});
+
 	}
 
 }

@@ -96,7 +96,7 @@ public class PetriNetDeserializer extends StdDeserializer<PetriNet> {
 				}
 				outputPlaces.put(placeLookup.get(elementName), oPlace.get("amount").longValue());
 			}
-			transitions.add(new Transition(inputPlaces, outputPlaces, transition.get("c").asDouble()));
+			transitions.add(new Transition(inputPlaces, outputPlaces, transition.get("k").asDouble()));
 		}
 		return new PetriNet(places, transitions, volume, consensusElement);
 	}
