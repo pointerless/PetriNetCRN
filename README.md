@@ -8,7 +8,8 @@ file formatted as following:
   "volume": [100],
   "places": [
     {"element": "A", "volumeRatio": 0.5},
-    {"element": "B", "volumeRatio": 0.5}
+    {"element": "B", "volumeRatio": 0.5},
+    {"element": "C", "volumeRatio": 0.0}
   ],
   "transitions": [{
       "inputPlaces": [
