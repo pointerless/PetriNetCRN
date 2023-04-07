@@ -46,3 +46,7 @@ For more information use the `--help` flag.
 ## REST API
 
 WIP
+
+# Report 
+
+The report for the coursework this was developed for is available at [./crn_report.pdf](./crn_report.pdf)
